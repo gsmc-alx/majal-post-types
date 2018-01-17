@@ -1,14 +1,14 @@
 <?php
 /**
  * @package MAJAL_Alumni_Posttypes
- * @version 1.0
+ * @version 1.0.0
  */
 /*
 Plugin Name: MAJAL Post-Types
-Plugin URI: 
+Plugin URI:
 Description: Custom post-types for MA Journalism Alumni website
 Author: Goldsmiths Media & Communications
-Version: 1.0
+Version: 1.0.0
 Author URI:
 */
 

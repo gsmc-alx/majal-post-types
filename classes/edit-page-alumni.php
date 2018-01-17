@@ -1,21 +1,21 @@
 <?php
 
 class MAJALEditPageAlumni {
-	
+
 	var $plugin_url;
 	var $plugin_path;
-	
+
 	public function __construct() {
-		
-		$this->plugin_url = plugins_url( 'majal_post_types' ) . '/';
+
+		$this->plugin_url = plugins_url( 'majal-post-types' ) . '/';
 		$this->plugin_path = plugin_dir_path( __FILE__ );
-		
-		add_filter( 'tiny_mce_before_init', array( $this, 'majal_alumni_TinyMCE_options' ) );		
-		add_filter( 'add_meta_boxes', array( $this, 'majal_alumni_hide_editpage_taxomomies' ) );		
-		add_action( 'admin_enqueue_scripts', array( $this, 'majal_alumni_edit_enqueue_js' ) );	
+
+		add_filter( 'tiny_mce_before_init', array( $this, 'majal_alumni_TinyMCE_options' ) );
+		add_filter( 'add_meta_boxes', array( $this, 'majal_alumni_hide_editpage_taxomomies' ) );
+		add_action( 'admin_enqueue_scripts', array( $this, 'majal_alumni_edit_enqueue_js' ) );
 		add_action( 'init', array( $this, 'majal_alumni_initialize_cmb_meta_boxes' ) );
-		add_filter( 'cmb_meta_boxes', array( $this, 'majal_alumni_metaboxes' ) );		
-		add_action( 'admin_head', array( $this, 'majal_alumni_edit_remove_mediabutton' ) );	
+		add_filter( 'cmb_meta_boxes', array( $this, 'majal_alumni_metaboxes' ) );
+		add_action( 'admin_head', array( $this, 'majal_alumni_edit_remove_mediabutton' ) );
 		add_action( 'the_post', array( $this, 'majal_alumni_autoset_featured' ) );
 		add_action( 'save_post', array( $this, 'majal_alumni_autoset_featured' ) );
 		add_action( 'draft_to_publish', array( $this, 'majal_alumni_autoset_featured' ) );
@@ -23,11 +23,11 @@ class MAJALEditPageAlumni {
 		add_action( 'pending_to_publish', array( $this, 'majal_alumni_autoset_featured' ) );
 		add_action( 'future_to_publish', array( $this, 'majal_alumni_autoset_featured' ) );
 	}
-	
+
 	////////////////////////////////
 	// Hide TinyMCE toolbar items //
 	////////////////////////////////
-	
+
 	public function majal_alumni_TinyMCE_options( $opts ) {
 		$opts['remove_linebreaks']=false;
 		$opts['gecko_spellcheck']=false;
@@ -53,11 +53,11 @@ class MAJALEditPageAlumni {
 		$opts['toolbar4']='';
 		return $opts;
 	}
-	
+
 	/////////////////////
 	// Hide taxonomies //
 	/////////////////////
-	
+
 	public function majal_alumni_hide_editpage_taxomomies() {
 		remove_meta_box('majal_employmentindustrydiv', 'majal_alumni', 'side' );
 		remove_meta_box('majal_graduationyeardiv', 'majal_alumni', 'side' );
@@ -69,12 +69,12 @@ class MAJALEditPageAlumni {
 	// Class from WebDevStudios ////////////////////////////////////////////////////
 	// https://github.com/WebDevStudios/Custom-Metaboxes-and-Fields-for-WordPress //
 	////////////////////////////////////////////////////////////////////////////////
-	
+
 	public function majal_alumni_metaboxes( $meta_boxes ) {
-		
+
 		// Prefix for all fields
 		$prefix = '_majal_alumni_';
-		
+
 		// Quote
 		$meta_boxes['alumnus_quote_metabox'] = array(
 			'id' => 'alumnus_quote_metabox',
@@ -92,7 +92,7 @@ class MAJALEditPageAlumni {
 				)
 			)
 		);
-		
+
 		// Personal Details
 		$meta_boxes['alumnus_personaldetails_metabox'] = array(
 			'id' => 'alumnus_personaldetails_metabox',
@@ -137,7 +137,7 @@ class MAJALEditPageAlumni {
 				)
 			)
 		);
-		
+
 		// Education
 		$meta_boxes['alumnus_education_metabox'] = array(
 			'id' => 'alumnus_education_metabox',
@@ -168,7 +168,7 @@ class MAJALEditPageAlumni {
 				)
 			)
 		);
-		
+
 		// Employment First Job
 		$meta_boxes['alumnus_employment_jobfirst_metabox'] = array(
 			'id' => 'alumnus_employment_jobfirst_metabox',
@@ -192,7 +192,7 @@ class MAJALEditPageAlumni {
 				)
 			)
 		);
-		
+
 		// Employment Current Job
 		$meta_boxes['alumnus_employment_jobcurrent_metabox'] = array(
 			'id' => 'alumnus_employment_jobcurrent_metabox',
@@ -230,7 +230,7 @@ class MAJALEditPageAlumni {
 				)
 			)
 		);
-		
+
 		// Interviewer details
 		$meta_boxes['alumnus_interviewer_metabox'] = array(
 			'id' => 'alumnus_interviewer_metabox',
@@ -254,12 +254,12 @@ class MAJALEditPageAlumni {
 				)
 			)
 		);
-		
+
 		// Featured button (only show to Editors)
 		if ( current_user_can( 'edit_others_posts' ) ) {
 			$meta_boxes['alumnus_isfeatured'] = array(
 				'id' => 'alumnus_isfeatured_metabox',
-				'title' => 'Featured',	
+				'title' => 'Featured',
 				'pages' => array('majal_alumni'),
 				'context' => 'normal',
 				'priority' => 'high',
@@ -272,13 +272,13 @@ class MAJALEditPageAlumni {
 		                'type' => 'checkbox'
 		            )
 		        )
-				
+
 			);
 		};
-		
+
 		return $meta_boxes;
 	}
-	
+
 	//////////////////////////////
 	// Initialize Metabox Class //
 	//////////////////////////////
@@ -288,14 +288,14 @@ class MAJALEditPageAlumni {
 			require_once( $this->plugin_path . '../lib/metabox/init.php' );
 		}
 	}
-	
+
 	/////////////////////////////////
 	// Enqueue Alumni edit page JS //
 	/////////////////////////////////
 
 	public function majal_alumni_edit_enqueue_js() {
 		global $post;
-		if( $post->post_type == 'majal_alumni' ) :    		
+		if( $post->post_type == 'majal_alumni' ) :
 			wp_register_script(
 				'majal_alumni-post-type-edit-scripts',
 				$this->plugin_url . 'js/edit-page-alumni.js',
@@ -309,25 +309,25 @@ class MAJALEditPageAlumni {
 	////////////////////////////////////////////
 	// Remove Add Media button from edit page //
 	////////////////////////////////////////////
-	
+
 	public function majal_alumni_edit_remove_mediabutton() {
 		global $post;
 		if( $post->post_type == 'majal_alumni' && current_user_can('edit_post') ) {
 			remove_action( 'media_buttons', 'media_buttons' );
 		}
 	}
-	
+
 	/////////////////////////////
 	// Auto-set Featured Image //
 	/////////////////////////////
-	
+
 	public function majal_alumni_autoset_featured( $post_id ) {
 		// http://www.paulund.co.uk/automatically-set-post-featured-image
 		global $post;
-		
-		if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) 
+
+		if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE )
   			return;
-		
+
 		if ( 'page' == $_POST['post_type'] ) {
 			if ( !current_user_can( 'edit_page', $post_id ) )
 			return;
@@ -335,7 +335,7 @@ class MAJALEditPageAlumni {
 			if ( !current_user_can( 'edit_post', $post_id ) )
 				return;
 		}
-		
+
 		if( !has_post_thumbnail( $post->ID ) ) {
 			$attached_image = get_children( "post_parent=$post->ID&post_type=attachment&post_mime_type=image&numberposts=1" );
 			if ( $attached_image ) {

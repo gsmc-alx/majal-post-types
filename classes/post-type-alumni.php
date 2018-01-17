@@ -1,12 +1,12 @@
 <?php
 
 class MAJALPostTypeAlumni {
-	
+
 	var $plugin_url;
-	
+
 	public function __construct() {
-		$this->plugin_url = plugins_url( 'majal_post_types' ) . '/';
-		
+		$this->plugin_url = plugins_url( 'majal-post-types' ) . '/';
+
 		add_action( 'init', array( $this, 'majal_create_alumni_post_type' ) );
 		add_filter( 'post_updated_messages', array( $this, 'majal_alumni_updated_messages' ) );
 	}
@@ -14,9 +14,9 @@ class MAJALPostTypeAlumni {
 	////////////////////////////////////
 	// Create custom post Alumni type //
 	////////////////////////////////////
-	
-	public function majal_create_alumni_post_type() {		
-		
+
+	public function majal_create_alumni_post_type() {
+
 		// CODEX: http://codex.wordpress.org/Function_Reference/register_post_type
 		$alumni_posttype_labels = array(
 			'name'					=> _x( 'Alumni', 'post type general name' ),
@@ -28,17 +28,17 @@ class MAJALPostTypeAlumni {
 			'view_item'				=> __( "View Profiles" ),
 			'search_items'			=> __( "Search Alumni" ),
 			'not_found'				=> __( 'No Alumni found' ),
-			'not_found_in_trash' 	=> __( 'No Alumni found in Trash' ), 
+			'not_found_in_trash' 	=> __( 'No Alumni found in Trash' ),
 			'parent_item_colon' 	=> ''
 		);
-		
+
 		$alumni_posttype_args = array(
 			'labels'				=> $alumni_posttype_labels,
 			'description'   		=> 'MA Journalism Alumni',
 			'public' 				=> true,
 			'publicly_queryable' 	=> true,
 			'has_archive'			=> true,
-			'show_ui'				=> true, 
+			'show_ui'				=> true,
 			'query_var'				=> true,
 			'rewrite'				=> true,
 			'hierarchical'			=> false,
@@ -47,19 +47,19 @@ class MAJALPostTypeAlumni {
 			'supports'				=> array( 'editor', 'thumbnail' ),
 			'menu_icon'				=> $this->plugin_url . 'img/User-Clients-icon.png',
 			'rewrite'				=> array( 'slug' => 'alumni' )
-		);	
-		
+		);
+
 		register_post_type( 'majal_alumni', $alumni_posttype_args );
 	}
-	
+
 	////////////////////////////////////////
 	// Interaction messages for post type //
 	////////////////////////////////////////
-	
+
 	public function majal_alumni_updated_messages( $messages ) {
 		global $post, $post_ID;
 		$messages['majal_alumni'] = array(
-			0  => '', 
+			0  => '',
 			1  => sprintf( __('Profile updated. <a href="%s">View alumnus</a>'), esc_url( get_permalink($post_ID) ) ),
 			2  => __('Custom field updated.'),
 			3  => __('Custom field deleted.'),
@@ -72,7 +72,7 @@ class MAJALPostTypeAlumni {
 			10 => sprintf( __('Profile draft updated. <a target="_blank" href="%s">Preview alumnus</a>'), esc_url( add_query_arg( 'preview', 'true', get_permalink($post_ID) ) ) ),
 	  );
 	  return $messages;
-	}  
+	}
 }
 
 ?>
