@@ -1,0 +1,27 @@
+Custom Fields:
+
+First Name
+Second Name
+
+Nationality
+
+Graduation Year
+
+Undergrad Degree Subject
+Undergrad Degree University
+
+First Job Role
+First Job Organisation
+
+Current Job Role
+Current Job Organisation
+
+Quote
+
+
+Journalism Alumni old site:
+http://mcserver.gold.ac.uk/journalism/ma/2008/ma_journalism_jmm/Student_Profiles/Michael_Northcott.html
+
+Meta Boxes tutorials:
+http://www.smashingmagazine.com/2011/10/04/create-custom-post-meta-boxes-wordpress/
+http://www.smashingmagazine.com/2012/11/08/complete-guide-custom-post-types/
